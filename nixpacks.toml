@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ['...', 'wget', 'apt-utils', 'libpq-dev', 'tzdata', 'libsqlite3-0', 'libsqlite3-dev', 'zlib1g-dev', 'nodejs', 'yarn']
+nixPkgs = ['...', 'wget', 'libpq-dev', 'tzdata', 'libsqlite3-0', 'libsqlite3-dev', 'zlib1g-dev', 'nodejs', 'yarn']
 cmds = [ '...', 'rbenv install 3.2.0 && rbenv global 3.2.0' ]
 
 [phases.install]
