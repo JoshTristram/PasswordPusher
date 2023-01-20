@@ -1,12 +1,12 @@
 [phases.setup]
-nixPkgs = ['...', 'rbenv']
-cmds = ['']
+nixPkgs = ['...']
+cmds = ['...']
 
 [phases.install]
-cmds = ['nix-shell -p rbenv', 'gem install bundler']
+cmds = ['gem install bundler']
 
 [phases.build]
-cmds = ['nix-shell -p rbenv', 'rbenv local 3.2.0', 'bundle install --without development production test --deployment', 'bundle exec rake assets:precompile', 'RAILS_ENV=private ./bin/rake db:setup']
+cmds = ['bundle install --without development production test --deployment', 'bundle exec rake assets:precompile', 'RAILS_ENV=private ./bin/rake db:setup']
 
 [start]
 cmd = './bin/rails server --environment=private'

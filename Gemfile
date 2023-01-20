@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby ENV['CUSTOM_RUBY_VERSION'] || '>=2.7.0'
+ruby File.read(".ruby-version").strip
 
 gem 'rails', '~> 7.0.4'
 
