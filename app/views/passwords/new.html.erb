@@ -112,35 +112,6 @@
                     </div>
                 </div>
             </div>
-
-            # <div class='row'>
-            #     <div class='col'>
-            #         <div class="list-group mx-0">
-            #             <% if Settings.pw.enable_retrieval_step %>
-            #                 <label class="list-group-item d-flex gap-2">
-            #                 <%= check_box_tag "password[retrieval_step]", nil, Settings.pw.retrieval_step_default,
-            #                                 { class: 'form-check-input flex-shrink-0',
-            #                                   "data-knobs-target" => "retrievalStepCheckbox" } %>
-            #                 <span>
-            #                     <%= _('Use a 1-click retrieval step') %>
-            #                     <small class="d-block text-muted"><%= _('Helps to avoid chat systems and URL scanners from eating up views.') %></small>
-            #                 </span>
-            #                 </label>
-            #             <% end %>
-            #             <% if Settings.pw.enable_deletable_pushes%>
-            #                 <label class="list-group-item d-flex gap-2">
-            #                 <%= check_box_tag "password[deletable_by_viewer]", nil, Settings.pw.deletable_pushes_default,
-            #                                 { class: 'form-check-input flex-shrink-0',
-            #                                   "data-knobs-target" => "deletableByViewerCheckbox" } %>
-            #                 <span>
-            #                     <%= _('Allow immediate deletion') %>
-            #                     <small class="d-block text-muted"><%= _('Allow users to delete passwords once retrieved.') %></small>
-            #                 </span>
-            #                 </label>
-            #             <% end %>
-            #         </div>
-            #     </div>
-            # </div>
         </div>
         <div class='col-12 col-sm-4 p-3 mt-3'>
             <div class="mb-3 text-end">
@@ -156,20 +127,17 @@
                     </button>
                 </div>
             </div>
-            # <p class='fst-italic fw-light'><%= _('Use the button above to generate a random password.') %></p>
-            # <p class='fst-italic'><%= _('Tip: Only enter a password into the box.  Other identifying information can compromise security.') %></p>
-            # <p class='fst-italic fw-light'><%= _('All passwords are encrypted prior to storage and are available to only those with the secret link.  Once expired, encrypted passwords are unequivocally deleted from the database.') %></p>
         </div>
     </div>
-    # <div class='row'>
-    #     <div class='col'>
-    #         <p class='mb-3'>
-    #             <div id='cookie-save'>
-    #                 <a data-action="click->knobs#saveSettings" href="#"><%= _('Save') %></a> <%= _('the above settings as the page default.') %>
-    #             </div>
-    #         </p>
-    #     </div>
-    # </div>
+    <div class='row'>
+        <div class='col'>
+            <p class='mb-3'>
+                <div id='cookie-save'>
+                    <a data-action="click->knobs#saveSettings" href="#"><%= _('Save') %></a> <%= _('the above settings as the page default.') %>
+                </div>
+            </p>
+        </div>
+    </div>
     <div class='row'>
         <div class='col'>
             <p class='my-3'>
