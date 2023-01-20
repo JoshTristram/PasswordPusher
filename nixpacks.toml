@@ -6,7 +6,7 @@ cmds = ['...']
 cmds = ['gem install bundler']
 
 [phases.build]
-cmds = ['bundle install --without development production test --deployment', 'bundle exec rake assets:precompile', 'RAILS_ENV=private ./bin/rake db:setup']
+cmds = ['bundle install --without development production test --deployment', 'bundle exec rake assets:precompile']
 
 [start]
 cmd = './bin/rails server --environment=private'
