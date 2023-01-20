@@ -1,6 +1,9 @@
 [phases.setup]
 nixPkgs = ['...']
-cmds = ['...', 'rbenv install 3.2.0 && rbenv global 3.2.0' ]
+cmds = ['curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash -s stable',
+"printf '\neval \"$(rbenv init -)\"' >> /root/.profile",
+'./root/.profile',
+'rbenv install 3.2.0 && rbenv global 3.2.0' ]
 
 [phases.install]
 cmds = ['gem install bundler']
