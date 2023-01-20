@@ -1,0 +1,12 @@
+[phases.setup]
+nixPkgs = ['...', 'wget', 'apt-utils', 'libpq-dev', 'tzdata', 'libsqlite3-0', 'libsqlite3-dev', 'zlib1g-dev', 'nodejs', 'yarn']
+cmds = ['curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash -s stable && printf \'\neval \"$(rbenv init -)\"\' >> /root/.profile && ./root/.profile', 'rbenv install 3.2.0 && rbenv global 3.2.0' ]
+
+[phases.install]
+cmds = ['gem install bundler']
+
+[phases.build]
+cmds = ['bundle install --without development production test --deployment', 'bundle exec rake assets:precompile', 'RAILS_ENV=private ./bin/rake db:setup']
+
+[start]
+cmd = './bin/rails server --environment=private'
