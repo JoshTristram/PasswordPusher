@@ -1,6 +1,6 @@
 [phases.setup]
-nixPkgs = ['...', 'wget', 'libpq-dev', 'tzdata', 'libsqlite3-0', 'libsqlite3-dev', 'zlib1g-dev', 'nodejs', 'yarn']
-cmds = [ '...', 'rbenv install 3.2.0 && rbenv global 3.2.0' ]
+nixPkgs = ['...']
+cmds = ['...', 'rbenv install 3.2.0 && rbenv global 3.2.0' ]
 
 [phases.install]
 cmds = ['gem install bundler']
