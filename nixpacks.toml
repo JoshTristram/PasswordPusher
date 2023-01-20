@@ -1,5 +1,6 @@
 [phases.setup]
-cmds = ['nix-env -iA nixpkgs.rbenv']
+nixPkgs = ['...', 'rbenv']
+cmds = ['']
 
 [phases.install]
 cmds = ['nix-shell -p rbenv', 'gem install bundler']
