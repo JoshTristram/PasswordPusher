@@ -5,7 +5,27 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+      <% if current_user.nil? %>
+        gtag('config', '<%= ENV['GA_ACCOUNT'] %>');
+      <% else %>
+        gtag('config', '<%= ENV['GA_ACCOUNT'] %>', {'user_id': '<%= current_user.id %>' });
+      <% end %>
+  </script>
 
-      gtag('config', '<%= ENV['GA_ACCOUNT'] %>');
+  <script type="module">
+    let isInitialLoad = true;
+    document.addEventListener('turbolinks:load', () => {
+      if (isInitialLoad){isInitialLoad = false; return;}
+      <% if current_user.nil? %>
+        gtag('config', '<%= ENV['GA_ACCOUNT'] %>', {
+          page_path: window.location.pathname,
+        });
+      <% else %>
+        gtag('config', '<%= ENV['GA_ACCOUNT'] %>', {
+          page_path: window.location.pathname,
+          user_id: '<%= current_user.id %>'
+        });
+      <% end %>
+    });
   </script>
 <% end %>
