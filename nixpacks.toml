@@ -9,4 +9,4 @@ cmds = ['gem install bundler']
 cmds = ['bundle install --without development production test --deployment', 'bundle exec rake assets:precompile']
 
 [start]
-cmd = './bin/rails server --environment=private'
+cmd = './bin/rails server --environment=production'
