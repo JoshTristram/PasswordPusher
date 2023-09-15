@@ -156,23 +156,18 @@
                 </div>
                 <p class='fst-italic fw-light'><%= _('Use the button above to generate a random password.') %></p>
             </div>
-            <% if user_signed_in? %>
-                <div class='row mb-3'>
-                    <div class="input-group">
-                        <span class="input-group-text"><%= _('Reference Note') %></span>
-                        <%= f.text_area(:note, { class: "form-control",
-                                                rows: 1,
-                                                placeholder: _('Optional'),
-                                                autocomplete: "off" }) %>
-                    </div>
-                    <div class="form-text" id="basic-addon4"><%= _('Encrypted and visible only to you') %></div>
+            <p class='fst-italic fw-light'><%= _('Use the button above to generate a random password.') %></p>
+            <p class='fst-italic'><%= _('Tip: Only enter a password into the box.  Other identifying information can compromise security.') %></p>
+            <p class='fst-italic fw-light'><%= _('All passwords are encrypted prior to storage and are available to only those with the secret link.  Once expired, encrypted passwords are unequivocally deleted from the database.') %></p>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col'>
+            <p class='mb-3'>
+                <div id='cookie-save'>
+                    <a data-action="click->knobs#saveSettings" href="#"><%= _('Save') %></a> <%= _('the above settings as the page default.') %>
                 </div>
-            <% end %>
-            <div class='row my-3 px-5'> <hr/> </div>
-            <div class='row mb-3'>
-                <p class='fst-italic'><%= _('Tip: Only enter a password into the box.  Other identifying information can compromise security.') %></p>
-                <p class='fst-italic fw-light'><%= _('All passwords are encrypted prior to storage and are available to only those with the secret link.  Once expired, encrypted passwords are unequivocally deleted from the database.') %></p>
-            </div>
+            </p>
         </div>
     </div>
     <div class='row'>

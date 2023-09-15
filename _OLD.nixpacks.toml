@@ -1,0 +1,12 @@
+[phases.setup]
+nixPkgs = ['...']
+cmds = ['...']
+
+[phases.install]
+cmds = ['gem install bundler']
+
+[phases.build]
+cmds = ['bundle install', 'bundle exec rake assets:precompile']
+
+[start]
+cmd = 'bundle exec puma -C config/puma.rb'
