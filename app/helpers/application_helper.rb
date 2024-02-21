@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   # Set the HTML title for the page with a trailing site identifier.
   def title(content)
@@ -18,15 +20,16 @@ module ApplicationHelper
   # Used to construct the fully qualified secret URL for a push.
   # raw == This is done without the preliminary step (Click here to proceed).
   def raw_secret_url(password)
-    push_locale = params['push_locale'] || I18n.locale
+    push_locale = params["push_locale"] || I18n.locale
 
     if Settings.override_base_url
       raw_url = I18n.with_locale(push_locale) do
-        if (password.is_a?(Password))
+        case password
+        when Password
           Settings.override_base_url + password_path(password)
-        elsif password.is_a?(Url)
+        when Url
           Settings.override_base_url + url_path(password)
-        elsif password.is_a?(FilePush)
+        when FilePush
           Settings.override_base_url + file_push_path(password)
         else
           raise "Unknown push type: #{password.class}"
@@ -34,11 +37,12 @@ module ApplicationHelper
       end
     else
       raw_url = I18n.with_locale(push_locale) do
-        if (password.is_a?(Password))
+        case password
+        when Password
           password_url(password)
-        elsif password.is_a?(Url)
+        when Url
           url_url(password)
-        elsif password.is_a?(FilePush)
+        when FilePush
           file_push_url(password)
         else
           raise "Unknown push type: #{password.class}"
@@ -46,7 +50,7 @@ module ApplicationHelper
       end
 
       # Support forced https links with FORCE_SSL env var
-      raw_url.gsub(/http/i, 'https') if ENV.key?('FORCE_SSL') && !request.ssl?
+      raw_url.gsub(/http/i, "https") if ENV.key?("FORCE_SSL") && !request.ssl?
     end
 
     raw_url
@@ -55,7 +59,7 @@ module ApplicationHelper
   # Constructs a fully qualified secret URL for a push.
   def secret_url(password)
     url = raw_secret_url(password)
-    url += '/r' if password.retrieval_step
+    url += "/r" if password.retrieval_step
     url
   end
 end

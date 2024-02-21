@@ -138,6 +138,38 @@ host_protocol: 'https'
 #
 # override_base_url: 'https://pwpush.mydomain.com'
 
+### Show version on the footer
+#
+# Enable/disable PasswordPusher verison on the footer.
+#
+# Environment variable override:
+# PWP__SHOW_VERSION=true
+#
+# Default: true
+show_version: true
+
+### Show the GDPR cookie consent banner
+#
+# Enable/disable the GDPR cookie consent banner.
+#
+# Environment variable override:
+# PWP__SHOW_GDPR_CONSENT_BANNER=true
+#
+# Default: true
+show_gdpr_consent_banner: true
+
+### Timezone
+#
+# Set the timezone for the application.  A full list of timezone strings
+# can be found here:
+# https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+#
+# Environment variable override:
+# PWP__TIMEZONE='America/New_York'
+#
+# Default: 'America/New_York'
+timezone: 'America/New_York'
+
 ### Allowed Hosts
 #
 # This is a list of allowed hosts for the application.  This is used to
@@ -412,6 +444,17 @@ files:
   #
   enable_blur: true
 
+  # Maximum File Upload Count
+  #
+  # default: 10
+  #
+  # This option controls the maximum number of files that can be uploaded
+  # in a single push.
+  #
+  # Environment variable override:
+  # PWP__FILES__MAX_FILE_UPLOADS=10
+  #
+  max_file_uploads: 10
 
   # File Storage
   #
@@ -451,6 +494,15 @@ files:
     credentials: ''
     # Environment Variable Override: PWP__FILES__GCS__BUCKET=''
     bucket: ''
+    #
+    # Optionally use IAM instead of the credentials when signing URLs.
+    # This is useful if you are authenticating your GKE applications with Workload Identity,
+    # See here: https://edgeguides.rubyonrails.org/active_storage_overview.html#google-cloud-storage-service
+    #
+    # Environment Variable Override: PWP__FILES__GCS__IAM=true
+    iam: false
+    # Environment Variable Override: PWP__FILES__GCS__GSA_EMAIL='email@domain.com'
+    gsa_email: null
 
   # Microsoft Azure Storage Credentials
   as:
@@ -542,6 +594,11 @@ brand:
   # Environment variable override: PWP__BRAND__TAGLINE='Security First'
   #
   tagline: 'Go Ahead.  Email Another Password.'
+
+  ### Site Disclaimer
+  #
+  # Environment variable override: PWP__BRAND__DISCLAIMER='Use at own use risk.'
+  # disclaimer: 'This is a dummy disclaimer and should not be considered legally binding or taken seriously in any way. The content provided here is for entertainment and illustrative purposes only. Any resemblance to actual disclaimers is purely coincidental. We do not endorse or encourage the use of this disclaimer for any real-world applications, and we strongly advise consulting a legal professional for creating legitimate and appropriate disclaimers for your specific needs. By reading this disclaimer, you agree not to hold us responsible for any confusion, amusement, or bewilderment it may cause. This disclaimer has no legal validity, and any attempt to rely on it for legal, financial, or any other serious matters is ill-advised. Please use disclaimers responsibly and in accordance with applicable laws and regulations.'
 
   ### Show Footer Menu Toggle
   #
@@ -721,16 +778,20 @@ feedback:
   # Environment Variable Override: PWP__FEEDBACK__EMAIL='my@email.com'
   email: 'feedback@pwpush.com'
 
-### Docker Precompilation
-#
-# If set to true, the Docker image will precompile assets on container boot.
+### Docker Pre-compilation
 #
 # This is useful if you modified the assets (e.g. CSS, JS, images) to customize
 # the theme etc...  Assets are precompiled before serving.
 #
-# Environment Variable Override: PWP_PRECOMPILE='false'
+# If you set a custom theme, you will need to precompile the assets on container boot.
 #
-# precompile: false
+# Pre-compilation isn't supported in this yaml file.  It is only supported
+# through the environment variable PWP_PRECOMPILE='true'.
+#
+# See the following for more information:
+# https://github.com/pglombardo/PasswordPusher/blob/master/Configuration.md#how-to-precompile-css-assets
+#
+# Environment Variable: PWP_PRECOMPILE='false'
 
 ### Themes
 #
@@ -767,6 +828,7 @@ language_codes:
   de: 'Deutsch'
   en: 'English'
   es: 'Español'
+  eu: 'Euskara'
   fi: 'Suomi'
   fr: 'Français'
   hi: 'हिन्दी'
@@ -789,7 +851,7 @@ language_codes:
   th: 'ไทย'
   uk: 'Українська'
   ur: 'اردو'
-  zh-CN: '中国人'
+  zh-CN: '中文'
 
 # Used internally for the language selector model.
 # This provides a conversion of language codes to
@@ -804,6 +866,7 @@ country_codes:
   de: :de
   en: :us
   es: :es
+  eu: :es-pv
   fi: :fi
   fr: :fr
   hi: :in

@@ -32,7 +32,7 @@
       <% for push in @pushes do %>
         <tr>
           <td><%= push.url_token %></td>
-          <td><%= I18n.l push.created_at, format: :long %></td>
+          <td><%= I18n.l push.created_at.in_time_zone(Settings.timezone), format: :long %></td>
           <td>
             <% if push.note.blank? %>
               <span class='text-muted'><%= _('None') %></span>
@@ -42,8 +42,8 @@
               </div>
             <% end %>
           </td>
-          <td class="text-center"><%= "#{push.views.size}/#{push.expire_after_views}"%></td>
-          <td class="text-center"><%= "#{push.days_old}/#{push.expire_after_days}"%></td>
+          <td class="text-center"><%= "#{push.views.size}/#{push.expire_after_views}" %></td>
+          <td class="text-center"><%= "#{push.days_old}/#{push.expire_after_days}" %></td>
           <td class="text-center">
             <div class="btn-group w-100" role="group" aria-label="<%= _('Push Controls') %>">
               <%= link_to preview_url_path(push), class: 'btn btn-primary btn-sm', rel: 'nofollow' do %>

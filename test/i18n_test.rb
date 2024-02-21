@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'i18n/tasks'
+require "i18n/tasks"
 
 class I18nTest < ActiveSupport::TestCase
   def setup
@@ -11,12 +11,12 @@ class I18nTest < ActiveSupport::TestCase
 
   def test_no_missing_keys
     assert_empty @missing_keys,
-                 "Missing #{@missing_keys.leaves.count} i18n keys, run `i18n-tasks missing' to show them"
+      "Missing #{@missing_keys.leaves.count} i18n keys, run `i18n-tasks missing' to show them"
   end
 
   def test_no_unused_keys
     # Disabled: route_translator keys are incorrectly showing up as unused
-    #assert_empty @unused_keys,
+    # assert_empty @unused_keys,
     #             "#{@unused_keys.leaves.count} unused i18n keys, run `i18n-tasks unused' to show them"
   end
 

@@ -1,9 +1,11 @@
-require 'test_helper'
+# frozen_string_literal: true
+
+require "test_helper"
 
 class PasswordJsonCreationTest < ActionDispatch::IntegrationTest
   def test_deletion
     # Create password
-    post passwords_path(format: :json), params: { :password => { payload: "testpw" } }
+    post passwords_path(format: :json), params: {password: {payload: "testpw"}}
     assert_response :success
 
     res = JSON.parse(@response.body)
@@ -21,7 +23,7 @@ class PasswordJsonCreationTest < ActionDispatch::IntegrationTest
     assert_equal Settings.pw.expire_after_views_default, res["views_remaining"]
 
     # Delete the new password via json e.g. /p/<url_token>.json
-    delete "/p/" + res["url_token"] + ".json"
+    delete "/p/#{res["url_token"]}.json"
     assert_response :success
 
     res = JSON.parse(@response.body)
@@ -39,7 +41,7 @@ class PasswordJsonCreationTest < ActionDispatch::IntegrationTest
     assert_equal Settings.pw.expire_after_views_default, res["views_remaining"]
 
     # Now try to retrieve the password again
-    get "/p/" + res["url_token"] + ".json"
+    get "/p/#{res["url_token"]}.json"
     assert_response :success
 
     res = JSON.parse(@response.body)
@@ -55,6 +57,6 @@ class PasswordJsonCreationTest < ActionDispatch::IntegrationTest
     assert res.key?("days_remaining")
     assert_equal Settings.pw.expire_after_days_default, res["days_remaining"]
     assert res.key?("views_remaining")
-    assert_equal Settings.pw.expire_after_views_default-1, res["views_remaining"]
+    assert_equal Settings.pw.expire_after_views_default - 1, res["views_remaining"]
   end
 end

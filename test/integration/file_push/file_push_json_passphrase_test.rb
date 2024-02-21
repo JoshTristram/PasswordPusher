@@ -1,4 +1,6 @@
-require 'test_helper'
+# frozen_string_literal: true
+
+require "test_helper"
 
 class FilePushJsonPassphraseTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
@@ -11,32 +13,29 @@ class FilePushJsonPassphraseTest < ActionDispatch::IntegrationTest
     @luca.confirm
   end
 
-  teardown do
-  end
-
   def test_basic_json_passphrase
-    post file_pushes_path(format: :json), params: { 
-      file_push: { 
-        payload: 'Message',
-        passphrase: 'asdf',
-        files: [ 
-          fixture_file_upload('monkey.png', 'image/jpeg')
-        ]
-      }
-    },
-    headers: { 'X-User-Email': @luca.email, 'X-User-Token': @luca.authentication_token }
+    post file_pushes_path(format: :json), params: {
+                                            file_push: {
+                                              payload: "Message",
+                                              passphrase: "asdf",
+                                              files: [
+                                                fixture_file_upload("monkey.png", "image/jpeg")
+                                              ]
+                                            }
+                                          },
+      headers: {"X-User-Email": @luca.email, "X-User-Token": @luca.authentication_token}
     assert_response :success
 
     res = JSON.parse(@response.body)
-    assert res.key?('payload') == false # No payload on create response
-    assert res.key?('url_token')
-    assert !res.key?('passphrase')
+    assert res.key?("payload") == false # No payload on create response
+    assert res.key?("url_token")
+    assert_not res.key?("passphrase")
 
-    url_token = res['url_token']
+    url_token = res["url_token"]
 
     # Now try to retrieve the file push directly
     # We should get an error because we didn't provide a passphrase
-    get "/f/" + url_token + ".json"
+    get "/f/#{url_token}.json"
     assert_response :success
 
     res = JSON.parse(@response.body)
@@ -44,7 +43,7 @@ class FilePushJsonPassphraseTest < ActionDispatch::IntegrationTest
     assert_equal "This push has a passphrase that was incorrect or not provided.", res["error"]
 
     # Now try to retrieve the password with the correct passphrase
-    get "/f/" + url_token + ".json?passphrase=asdf"
+    get "/f/#{url_token}.json?passphrase=asdf"
     assert_response :success
 
     res = JSON.parse(@response.body)
@@ -55,30 +54,30 @@ class FilePushJsonPassphraseTest < ActionDispatch::IntegrationTest
     assert res.key?("payload")
     assert_equal "Message", res["payload"]
   end
-  
+
   def test_basic_json_bad_passphrase
-    post file_pushes_path(format: :json), params: { 
-      file_push: { 
-        payload: 'testpw',
-        passphrase: 'asdf',
-        files: [ 
-          fixture_file_upload('monkey.png', 'image/jpeg')
-        ]
-      }
-    },
-    headers: { 'X-User-Email': @luca.email, 'X-User-Token': @luca.authentication_token }
+    post file_pushes_path(format: :json), params: {
+                                            file_push: {
+                                              payload: "testpw",
+                                              passphrase: "asdf",
+                                              files: [
+                                                fixture_file_upload("monkey.png", "image/jpeg")
+                                              ]
+                                            }
+                                          },
+      headers: {"X-User-Email": @luca.email, "X-User-Token": @luca.authentication_token}
     assert_response :success
 
     res = JSON.parse(@response.body)
-    assert res.key?('payload') == false # No payload on create response
-    assert res.key?('url_token')
-    assert !res.key?('passphrase')
+    assert res.key?("payload") == false # No payload on create response
+    assert res.key?("url_token")
+    assert_not res.key?("passphrase")
 
-    url_token = res['url_token']
+    url_token = res["url_token"]
 
     # Now try to retrieve the file push directly
     # We should get an error because we didn't provide a passphrase
-    get "/f/" + url_token + ".json"
+    get "/f/#{url_token}.json"
     assert_response :success
 
     res = JSON.parse(@response.body)
@@ -86,7 +85,7 @@ class FilePushJsonPassphraseTest < ActionDispatch::IntegrationTest
     assert_equal "This push has a passphrase that was incorrect or not provided.", res["error"]
 
     # Now try to retrieve the password with the incorrect passphrase
-    get "/f/" + url_token + ".json?passphrase=badpassphrase"
+    get "/f/#{url_token}.json?passphrase=badpassphrase"
     assert_response :success
 
     res = JSON.parse(@response.body)

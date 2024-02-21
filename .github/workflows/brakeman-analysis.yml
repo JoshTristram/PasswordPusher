@@ -28,9 +28,8 @@ jobs:
         ruby-version: '3.0'
 
     - name: Run brakeman with reviewdog
-      uses: reviewdog/action-brakeman@v2.6.0
+      uses: reviewdog/action-brakeman@v2.8.0
       # env:
       #   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       with:
         reporter: github-pr-review
-

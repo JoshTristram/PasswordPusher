@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  layout 'application', only: %i[edit update token]
-  layout 'login', except: %i[edit update token]
+  layout "application", only: %i[edit update token]
+  layout "login", except: %i[edit update token]
 
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
@@ -47,13 +47,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     # Pre-existing accounts don't have a token yet.
     # Save the user record to have one automatically generated.
-    if current_user && current_user.authentication_token.blank?
-      current_user.save
-    end
-
-    respond_to do |format|
-      format.html {}
-    end
+    current_user.save if current_user && current_user.authentication_token.blank?
   end
 
   # PUT /resource/token

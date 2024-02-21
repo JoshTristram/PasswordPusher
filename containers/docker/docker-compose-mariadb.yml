@@ -1,10 +1,28 @@
 version: '2.1'
-services:
 
-  passwordpusher:
-    image: docker.io/pglombardo/pwpush-ephemeral:release
+services:
+  db:
+    image: mariadb:10.6.5
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_USER: 'passwordpusher_user'
+      MARIADB_PASSWORD: 'passwordpusher_passwd'
+      MARIADB_DATABASE: 'passwordpusher_db'
+      MARIADB_RANDOM_ROOT_PASSWORD: 'yes'
+    volumes:
+      - /var/lib/pwpush-mariadb/data:/var/lib/mysql
+
+  pwpush:
+    image: docker.io/pglombardo/pwpush:release
+    environment:
+      DATABASE_URL: 'mysql2://passwordpusher_user:passwordpusher_passwd@mysql:3306/passwordpusher_db'
     ports:
       - "5100:5100"
+    depends_on:
+      - db
+    links:
+     - db:mysql
     # You can set environment variables here, or in a .env file.  See:
     # https://docs.docker.com/compose/environment-variables/
     #
@@ -35,11 +53,3 @@ services:
     # https://github.com/pglombardo/PasswordPusher/blob/master/config/settings.yml
     #
     # Then you can use the above bind mount to overlay the file into the container on boot.
-    #
-    # See also:
-    #
-    # pwpush-ephemeral: How to Add Persistent Storage
-    # https://github.com/pglombardo/PasswordPusher/discussions/448
-    #
-
-

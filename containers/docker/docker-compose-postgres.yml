@@ -1,26 +1,28 @@
 version: '2.1'
 
 services:
-  db:
-    image: mariadb:10.6.5
-    ports:
-      - "3306:3306"
-    environment:
-      MARIADB_USER: 'passwordpusher_user'
-      MARIADB_PASSWORD: 'passwordpusher_passwd'
-      MARIADB_DATABASE: 'passwordpusher_db'
-      MARIADB_RANDOM_ROOT_PASSWORD: 'yes'
+  postgres:
+    image: docker.io/postgres:15
     volumes:
-      - /var/lib/pwpush-mariadb/data:/var/lib/mysql
+      - /var/lib/postgresql/data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: passwordpusher_user
+      POSTGRES_PASSWORD: passwordpusher_passwd
+      POSTGRES_DB: passwordpusher_db
 
-  pwpush:
-    image: docker.io/pglombardo/pwpush-mysql:release
+  passwordpusher:
+    image: docker.io/pglombardo/pwpush:release
+    environment:
+      DATABASE_URL: 'postgres://passwordpusher_user:passwordpusher_passwd@postgres:5432/passwordpusher_db'
     ports:
       - "5100:5100"
     depends_on:
-      - db
+      - postgres
     links:
-     - db:mysql
+     - postgres:postgres
+    #
     # You can set environment variables here, or in a .env file.  See:
     # https://docs.docker.com/compose/environment-variables/
     #
@@ -51,4 +53,3 @@ services:
     # https://github.com/pglombardo/PasswordPusher/blob/master/config/settings.yml
     #
     # Then you can use the above bind mount to overlay the file into the container on boot.
-

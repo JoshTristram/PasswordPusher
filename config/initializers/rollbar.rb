@@ -1,14 +1,14 @@
+# frozen_string_literal: true
+
 if defined?(Rollbar)
   Rollbar.configure do |config|
     # Without configuration, Rollbar is enabled in all environments.
     # To disable in specific environments, set config.enabled=false.
 
-    config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
+    config.access_token = ENV.fetch("ROLLBAR_ACCESS_TOKEN", nil)
 
     # Here we'll disable in 'test':
-    if Rails.env.test?
-      config.enabled = false
-    end
+    config.enabled = false if Rails.env.test?
 
     # By default, Rollbar will try to call the `current_user` controller method
     # to fetch the logged-in user object, and then call that object's `id`
@@ -34,8 +34,8 @@ if defined?(Rollbar)
     #
     # You can also specify a callable, which will be called with the exception instance.
     # config.exception_level_filters.merge!('MyCriticalException' => lambda { |e| 'critical' })
-    config.exception_level_filters.merge!('ActiveRecord::RecordNotFound' => 'ignore')
-    config.exception_level_filters.merge!('ActionController::RoutingError' => 'ignore')
+    config.exception_level_filters["ActiveRecord::RecordNotFound"] = "ignore"
+    config.exception_level_filters["ActionController::RoutingError"] = "ignore"
 
     # Enable asynchronous reporting (uses girl_friday or Threading if girl_friday
     # is not installed)
@@ -70,6 +70,6 @@ if defined?(Rollbar)
     # environment variable like this: `ROLLBAR_ENV=staging`. This is a recommended
     # setup for Heroku. See:
     # https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment
-    config.environment = ENV['ROLLBAR_ENV'].presence || Rails.env
+    config.environment = ENV["ROLLBAR_ENV"].presence || Rails.env
   end
 end

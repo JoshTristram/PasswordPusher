@@ -2,7 +2,7 @@
 # Docker container.
 #
 # This can be passed to docker as:
-# docker run -d --env-file ./pwpush-docker-env-file pglombardo/pwpush-ephemeral:release
+# docker run -d --env-file ./pwpush-docker-env-file pglombardo/pwpush:release
 #
 # This is not an authoratative list of possible environment variables.
 # See the full list of supported configuration environment variables:
@@ -39,4 +39,3 @@
 # PWP__FILES__EXPIRE_AFTER_VIEWS_MAX=10
 # PWP__FILES__RETRIEVAL_STEP_DEFAULT=true
 # PWP__ENABLE_URL_PUSHES=true
-   
